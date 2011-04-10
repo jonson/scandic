@@ -1,9 +1,5 @@
 package com.dajodi.scandic;
 
-import org.htmlcleaner.ConfigFileTagProvider;
-import org.htmlcleaner.DefaultTagProvider;
-import org.xml.sax.InputSource;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -115,8 +111,6 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 			if (isFromSettingsActivity()) {
 				// have to relogin
 				ScandicSessionHelper.clearSession();
-				// write the data immedately, we need to store these if its from the settings screen
-				Util.write(context, params[0], params[1]);
 			}
 			
 			info = ScandicSessionHelper.fetchInfo(params[0], params[1]);

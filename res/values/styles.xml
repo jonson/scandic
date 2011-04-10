@@ -51,37 +51,17 @@
   </style>
   
   <style name="TextSmallGrey" parent="@android:style/TextAppearance.Small">
-  		<!-- 
-  		<item name="android:shadowColor">#3C3C3C</item>
-    	<item name="android:shadowRadius">1</item>
-    	<item name="android:shadowDy">1</item>
-    	 -->
   </style>
   
   <style name="TextSmallGreyBold" parent="@android:style/TextAppearance.Small">
    		<item name="android:textStyle">bold</item>
-  		<!-- 
-  		<item name="android:shadowColor">#3C3C3C</item>
-    	<item name="android:shadowRadius">1</item>
-    	<item name="android:shadowDy">1</item>
-    	 -->
   </style>
   
   <style name="TextMediumGrey" parent="@android:style/TextAppearance.Medium">
-  		<!-- 
-  		<item name="android:shadowColor">#3C3C3C</item>
-    	<item name="android:shadowRadius">1</item>
-    	<item name="android:shadowDy">1</item>
-    	 -->
   </style>
   
   <style name="TextMediumGreyBold" parent="@android:style/TextAppearance.Medium">
   		<item name="android:textStyle">bold</item>
-  		<!-- 
-  		<item name="android:shadowColor">#3C3C3C</item>
-    	<item name="android:shadowRadius">1</item>
-    	<item name="android:shadowDy">1</item>
-    	 -->
   </style>
   
    

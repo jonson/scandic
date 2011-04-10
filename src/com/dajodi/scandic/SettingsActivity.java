@@ -69,6 +69,9 @@ public class SettingsActivity extends Activity {
 					Toast.makeText(SettingsActivity.this, R.string.login_invalid_password, Toast.LENGTH_SHORT).show();
 					passwordTxt.requestFocus();
 				} else {
+
+					// write the data immedately, we need to store these if its from the settings screen
+					Util.write(SettingsActivity.this, username, password);
 					
 					if (before.getUsername().equals(username) && before.getPassword().equals(password)) {
 						// username & password are the same (prob just hit the save button), don't do anything

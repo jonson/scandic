@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.protocol.HTTP;
-import org.htmlcleaner.TagNode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
