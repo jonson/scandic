@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.dajodi.scandic.Tracker.UpdateSource;
 import com.dajodi.scandic.model.MemberInfo;
+import com.dajodi.scandic.model.UpdateSource;
 
 public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 

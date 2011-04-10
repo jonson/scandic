@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dajodi.scandic.FetchMemberInfoTask.ProgressType;
-import com.dajodi.scandic.Tracker.UpdateSource;
+import com.dajodi.scandic.model.UpdateSource;
 import com.dajodi.scandic.user.UsernamePassword;
 
 public class SettingsActivity extends Activity {

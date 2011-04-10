@@ -1,18 +1,12 @@
 package com.dajodi.scandic;
 
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
-
 import android.content.Context;
+
+import com.dajodi.scandic.model.UpdateSource;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 public final class Tracker {
 	
-	
-	public enum UpdateSource {
-		AUTOMATIC,
-		LOGIN_BUTTON,
-		CHANGEPW_BUTTON,
-		REFRESH_BUTTON;
-	}
 	
 	private static final String CATEGORY_UPDATE = "Update";
 	private static final String ACTION_SOURCE = "Source";

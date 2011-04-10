@@ -27,9 +27,9 @@ import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.dajodi.scandic.FetchMemberInfoTask.ProgressType;
-import com.dajodi.scandic.Tracker.UpdateSource;
 import com.dajodi.scandic.model.MemberInfo;
 import com.dajodi.scandic.model.ScandicStay;
+import com.dajodi.scandic.model.UpdateSource;
 import com.dajodi.scandic.user.UsernamePassword;
 
 /**
