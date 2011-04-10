@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scandic</string>
+    
+    <!-- menu strings -->
+    <string name="menu.settings">Settings</string>
+    <string name="menu.refresh">Refresh</string>
+    
+    <!-- misc -->
+    <string name="details.last_updated">Updated %1$s %2$s</string>
+    
+    <!-- login strings -->
+    <string name="login.username">Membership number</string>
+    <string name="login.password">Password</string>
+    <string name="login.freqguest">Frequent guest programme</string>
+    <string name="login.login">Login</string>
+    <string name="login.invalid_user">Please enter a valid membership number</string>
+    <string name="login.invalid_password">Please enter a valid password</string>
+    <string name="login.save">Save</string>
+    <string name="login.loading">Loading. Please wait...</string>
+    <string name="login.failed">Your attempt to login failed, please try again.</string>
+    <string name="login.error">An error occurred while retrieving the data, please try again later.</string>
+    
+    <!-- labels -->
+    <string name="details.membership_number">Membership number</string>
+    <string name="details.member_level">Member level</string>
+    <string name="details.your_points">Your points</string>
+    <string name="details.no_transactions">There are no transactions registered on your account.</string>
+    <string name="details.unknown_nights">An error occurred while reading your account details, please contact support</string>
+    <string name="details.transactions">Transactions</string>
+    <string name="details.qual_points">Points qualifying nights during the last 12 months:</string>
+    <string name="details.qual_nights">%1$d nights</string>
+    <string name="details.points_error"></string>
+    <string name="details.level_error"></string>
+    <string name="details.zero_points_header">Please note</string>
+    <string name="details.zero_points_detail">It may take up to 7 days before your transactions are registered on your account. During this period the value of the points will be 0.</string>
+    
+    <!--  transaction -->
+    <string name="tx.unknown_hotel">Unknown hotel</string>
+    <string name="tx.unknown_duration">Unknown duration</string>
+    <string name="tx.unknown_month">Unknown</string>
+    <string name="tx.points">%1$d points</string>
+    <string name="tx.dates_multi_nights">%1$s - %2$s (%3$d nights)</string>
+    <string name="tx.dates_one_night">%1$s - %2$s (1 night)</string>
+    <string name="tx.dates_no_nights">%1$s - %2$s</string>
+    
+    <!--  member levels -->
+    <string name="level.first_floor">1st floor</string>
+    <string name="level.second_floor">2nd floor</string>
+    <string name="level.third_floor">3rd floor</string>
+    <string name="level.top_floor">Top floor</string>
+    <string name="level.unknown">Top floor</string>
+    
+</resources>

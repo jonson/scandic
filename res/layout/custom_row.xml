@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_marginTop="5dp" android:background="@drawable/stay_row_background" android:padding="5dp">
+
+	<RelativeLayout android:layout_height="wrap_content"
+		android:id="@+id/relativeLayout1" android:layout_width="fill_parent">
+		<TextView android:id="@+id/name" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextSmallGreyBold"/>
+		<TextView android:id="@+id/pointsTxt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingRight="5dp" android:layout_alignParentRight="true" style="@style/TextSmallGreyBold"/>
+	</RelativeLayout>
+
+	<TextView android:id="@+id/dateRange" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" style="@style/TextSmallGrey"/>
+
+</LinearLayout>

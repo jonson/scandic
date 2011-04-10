@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scandic</string>
+    
+    <!-- menu strings -->
+    <string name="menu.settings">Innstillinger</string>
+    <string name="menu.refresh">Oppdater</string>
+    
+    <!-- misc -->
+    <!-- TODO -->
+    <string name="details.last_updated">Updated %1$s %2$s</string>
+    
+    <!-- login strings -->
+    <string name="login.username">Medlemsnummer</string>
+    <string name="login.password">Passord</string>
+    <string name="login.freqguest">Stamgjestprogram</string>
+    <string name="login.login">Logg inn</string>
+    <string name="login.invalid_user">Vennligst fyll inn gyldig medlemsnummer</string>
+    <string name="login.invalid_password">Fyll inn gyldig passord</string>
+    <!-- TODO -->
+    <string name="login.save">Save</string>
+    <string name="login.loading">Loading. Please wait...</string>
+    
+    <!-- labels -->
+    <string name="details.membership_number">Medlemsnummer</string>
+    <string name="details.member_level">Medlemsnivå</string>
+    <string name="details.your_points">Dine poeng</string>
+    <string name="details.no_transactions">Det finnes ingen transaksjoner registrert på medlemskontoen din</string>
+    <string name="details.transactions">Transaksjoner</string>
+    <string name="details.qual_points">Poengkvalifiserende netter de siste 12 månedene:</string>
+    <string name="details.qual_nights">%1$d netter</string>
+    <string name="details.points_error"></string>
+    <string name="details.level_error"></string>
+    <string name="details.zero_points_header">Vær oppmerksom på</string>
+    <string name="details.zero_points_detail">Det kan ta opptil 7 dager innen en transaksjon registreres på din medlemskonto. I denne perioden vil det stå 0 poeng.</string>
+    <!-- TODO -->
+    <string name="details.unknown_nights">An error occurred while reading your account details, please contact support</string>
+    
+    <!--  transaction -->
+    <string name="tx.points">%1$d poeng</string>
+    <string name="tx.dates_multi_nights">%1$s - %2$s (%3$d netter)</string>
+    <string name="tx.dates_no_nights">%1$s - %2$s</string>
+    <!-- TODO -->
+    <string name="tx.unknown_hotel">Unknown hotel</string>
+    <string name="tx.unknown_duration">Unknown duration</string>
+    <string name="tx.unknown_month">Unknown</string>
+    <string name="tx.dates_one_night">%1$s - %2$s</string>
+    
+</resources>

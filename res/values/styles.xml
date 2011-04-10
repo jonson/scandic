@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <style name="ScandicTheme" parent="@android:style/Theme.Light">
+    <item name="android:listSeparatorTextViewStyle">@style/listSeparatorTextViewStyle</item>
+    
+    <!-- can override default styles here, do it! -->
+  </style>
+  
+  <style name="listSeparatorTextViewStyle" parent="@android:attr/listSeparatorTextViewStyle">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingTop">2dip</item>
+    <item name="android:paddingBottom">3dip</item>
+    <item name="android:paddingLeft">5dip</item>
+    <item name="android:background">@drawable/points_gradient</item>
+    <item name="android:textAppearance">@style/TextSmallWhiteBold</item>
+    <item name="android:shadowColor">#111111</item>
+    <item name="android:shadowRadius">1</item>
+    <item name="android:shadowDy">1</item>
+  </style>
+  
+  <style name="TextMediumWhite" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:shadowColor">#111111</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+  </style>
+  
+  <style name="TextMediumWhiteBold" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#111111</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+  </style>
+  
+  <style name="TextSmallWhite" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:shadowColor">#111111</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+  </style>
+  
+  <style name="TextSmallWhiteBold" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#111111</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+  </style>
+  
+  <style name="TextSmallGrey" parent="@android:style/TextAppearance.Small">
+  		<!-- 
+  		<item name="android:shadowColor">#3C3C3C</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+    	 -->
+  </style>
+  
+  <style name="TextSmallGreyBold" parent="@android:style/TextAppearance.Small">
+   		<item name="android:textStyle">bold</item>
+  		<!-- 
+  		<item name="android:shadowColor">#3C3C3C</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+    	 -->
+  </style>
+  
+  <style name="TextMediumGrey" parent="@android:style/TextAppearance.Medium">
+  		<!-- 
+  		<item name="android:shadowColor">#3C3C3C</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+    	 -->
+  </style>
+  
+  <style name="TextMediumGreyBold" parent="@android:style/TextAppearance.Medium">
+  		<item name="android:textStyle">bold</item>
+  		<!-- 
+  		<item name="android:shadowColor">#3C3C3C</item>
+    	<item name="android:shadowRadius">1</item>
+    	<item name="android:shadowDy">1</item>
+    	 -->
+  </style>
+  
+   
+</resources>

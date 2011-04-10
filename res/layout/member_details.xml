@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:layout_width="fill_parent"
+	android:id="@+id/scrollView1">
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:orientation="vertical"
+		android:padding="5dp">
+
+		<RelativeLayout android:layout_height="wrap_content"
+			android:id="@+id/relativeLayout2" android:layout_width="fill_parent"
+			android:padding="5dp" android:background="@drawable/thin_border">
+			<RelativeLayout android:id="@+id/memberNumberLayout"
+				android:layout_marginBottom="5dp" android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:background="@drawable/boring_gradient"
+				android:padding="5dp">
+				<TextView android:id="@+id/membershipNumberLbl"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content" style="@style/TextMediumGrey" android:text="@string/details.membership_number"></TextView>
+				<TextView android:id="@+id/membershipNumberTxt"
+					android:layout_below="@+id/membershipNumberLbl" android:layout_height="wrap_content" android:layout_width="wrap_content"
+					style="@style/TextMediumGreyBold"></TextView>
+			</RelativeLayout>
+			<LinearLayout android:id="@+id/bottomRowLayout"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:layout_below="@+id/memberNumberLayout">
+				<RelativeLayout android:layout_height="wrap_content"
+					android:id="@+id/pointsLayout" android:layout_width="fill_parent"
+					android:layout_marginRight="5dp" android:layout_weight="1"
+					android:background="@drawable/points_gradient" android:padding="5dp">
+					<TextView android:id="@+id/yourPointsLbl" android:layout_height="wrap_content" android:layout_width="wrap_content"
+						android:text="@string/details.your_points" style="@style/TextMediumWhite"></TextView>
+					<TextView android:id="@+id/yourPointsTxt"
+						android:layout_below="@+id/yourPointsLbl" android:layout_height="wrap_content" android:layout_width="wrap_content" style="@style/TextMediumWhiteBold"></TextView>
+				</RelativeLayout>
+				<RelativeLayout android:layout_height="wrap_content"
+					android:id="@+id/memberLevelLayout" android:layout_width="fill_parent"
+					android:layout_weight="1" android:background="@drawable/boring_gradient"
+					android:padding="5dp">
+					<TextView android:id="@+id/memberLevelLbl" android:layout_height="wrap_content" android:layout_width="wrap_content"
+						style="@style/TextMediumGrey" android:text="@string/details.member_level"></TextView>
+					<TextView android:id="@+id/memberLevelTxt2"
+						android:layout_below="@+id/memberLevelLbl" android:layout_height="wrap_content" android:layout_width="wrap_content"
+						style="@style/TextMediumGreyBold"></TextView>
+				</RelativeLayout>
+			</LinearLayout>
+		</RelativeLayout>
+
+		<LinearLayout android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/transactionsLayout"
+			android:orientation="vertical" android:background="@drawable/thin_border" android:layout_marginTop="5dp" android:padding="5dp">
+			<TextView android:id="@+id/accountActivityLbl" android:layout_height="wrap_content" android:layout_width="wrap_content" style="@style/TextMediumGreyBold" android:text="@string/details.transactions"></TextView>
+			<RelativeLayout android:layout_height="wrap_content" android:id="@+id/relativeLayout1" android:layout_width="fill_parent" android:background="@drawable/qual_gradient" android:layout_marginTop="5dp" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_marginBottom="10dp">
+				<TextView android:id="@+id/qualLbl" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/details.qual_points" style="@style/TextSmallGrey"></TextView>
+				<TextView android:layout_below="@+id/qualLbl" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/qualTxt" style="@style/TextMediumGreyBold"></TextView>
+			</RelativeLayout>
+			
+			<LinearLayout android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/transactionTable"
+			android:orientation="vertical"  />
+		</LinearLayout>
+		
+		<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/lastUpdatedTxt" android:layout_gravity="center" android:paddingTop="5dp" style="@style/TextSmallGrey"></TextView>
+		
+	</LinearLayout>
+
+
+</ScrollView>
+	
+	
+
+
