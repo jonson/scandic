@@ -3,9 +3,11 @@
       package="com.dajodi.scandic"
       android:versionCode="1"
       android:versionName="1.0">
-
+	
     <application android:label="@string/app_name"
-    			android:theme="@style/ScandicTheme" android:icon="@drawable/ic_launcher">
+    			android:theme="@style/ScandicTheme" 
+    			android:icon="@drawable/ic_launcher"
+    			android:debuggable="false">
         <activity android:name=".MemberDetailsActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTop">
@@ -20,5 +22,6 @@
     
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-sdk android:targetSdkVersion="4" android:minSdkVersion="4"></uses-sdk>
 </manifest>

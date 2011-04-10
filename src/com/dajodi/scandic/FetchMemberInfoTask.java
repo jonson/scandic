@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.dajodi.scandic.Tracker.UpdateSource;
 import com.dajodi.scandic.model.MemberInfo;
 
 public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
@@ -18,24 +19,26 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 	public static final String READ_FROM_DISK = "READ_FROM_DISK";
 	
 	private final Activity context;
+	private final ProgressType progressType;
+	private final UpdateSource source;
 	
 	private MemberDetailsActivity memberDetailsActivity;
 	private SettingsActivity settingsActivity;
 	private ProgressDialog dialog;
-	private ProgressType progressType; 
-	
 	private boolean invalidLogin = false;
 	
-	public FetchMemberInfoTask(Activity context, ProgressType progressType) {
+	public FetchMemberInfoTask(Activity context, ProgressType progressType, UpdateSource source) {
 		super();
 		this.context = context;
+		this.progressType = progressType;
+		this.source = source;
 		
 		if (context instanceof MemberDetailsActivity) {
 			memberDetailsActivity = (MemberDetailsActivity) context;
 		} else if (context instanceof SettingsActivity) {
 			settingsActivity = (SettingsActivity) context;
 		}
-		this.progressType = progressType;
+		
 	}
 
 	@Override
@@ -105,15 +108,20 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 	@Override
 	protected MemberInfo doInBackground(String... params) {
 		
+		Tracker tracker = Singleton.INSTANCE.getTracker();
+		tracker.trackUpdateSource(source);
+		
 		try {
-			MemberInfo info = null;
+			
 			
 			if (isFromSettingsActivity()) {
 				// have to relogin
 				ScandicSessionHelper.clearSession();
 			}
 			
-			info = ScandicSessionHelper.fetchInfo(params[0], params[1]);
+			long before = System.currentTimeMillis();
+			MemberInfo info = ScandicSessionHelper.fetchInfo(params[0], params[1]);
+			long after = System.currentTimeMillis();
 			
 			if (info != null) {
 				// write the username, password only after a successful request
@@ -122,14 +130,18 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 				// finally try to write it to disk, worries if it fails here
 				Util.writeMemberInfo(context, info);
 				Log.d("successfully wrote fileinfo to disk");
+				
+				tracker.trackUpdateDuration((int)(after - before));
 			}
 			
 			return info;
 		} catch (InvalidLoginException e) {
 			Log.i("Login failed");
 			invalidLogin = true;
+			tracker.trackLoginError();
 		} catch (Exception e) {
 			Log.w("Error fetching/parsing html, cannot display anything", e);
+			tracker.trackUnknownError();
 		}
 		return null;
 	}

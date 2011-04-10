@@ -17,8 +17,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -27,6 +27,7 @@ import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.dajodi.scandic.FetchMemberInfoTask.ProgressType;
+import com.dajodi.scandic.Tracker.UpdateSource;
 import com.dajodi.scandic.model.MemberInfo;
 import com.dajodi.scandic.model.ScandicStay;
 import com.dajodi.scandic.user.UsernamePassword;
@@ -65,6 +66,7 @@ public class MemberDetailsActivity extends Activity {
 	private boolean initialOnCreateCall = true;
 	
 	private Intent lastIntent = null;
+	private Tracker tracker;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -86,11 +88,22 @@ public class MemberDetailsActivity extends Activity {
     	
     	initialOnCreateCall = false;
     	lastIntent = getIntent();
+    	
+    	tracker = Singleton.INSTANCE.getTracker();
+    	tracker.startTracking(this);
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	tracker.stopTracking();
     }
     
     @Override
     protected void onResume() {
     	super.onResume();
+    	
+    	tracker.trackMainActivityView();
     	
     	// if from settings intent
     	boolean fromSettings = lastIntent.getBooleanExtra(FetchMemberInfoTask.FROM_SETTINGS, false);
@@ -109,7 +122,7 @@ public class MemberDetailsActivity extends Activity {
             	long now = new Date().getTime();
             	Log.d("last update " + ((now - lastUpdated) / 1000 / 60) + " minutes ago");
             	if ( (now - lastUpdated) > UPDATE_TIME) {
-            		performLogin();
+            		performLogin(userpass.getUsername(), userpass.getPassword(), UpdateSource.AUTOMATIC);
             	}
             } 
     	}
@@ -168,7 +181,7 @@ public class MemberDetailsActivity extends Activity {
 					Toast.makeText(MemberDetailsActivity.this, R.string.login_invalid_password, Toast.LENGTH_SHORT).show();
 					passwordTxt.requestFocus();
 				} else {
-					performLogin();
+					performLogin(username, password, UpdateSource.LOGIN_BUTTON);
 				}
 			}
 		});
@@ -176,14 +189,11 @@ public class MemberDetailsActivity extends Activity {
         return v;
 	}
 		
-	private void performLogin() {
-		String username = ((EditText)loginView.findViewById(R.id.txtUsername)).getText().toString();
-		String password = ((EditText)loginView.findViewById(R.id.txtPassword)).getText().toString();
-		
+	private void performLogin(String username, String password, UpdateSource source) {
 		ProgressType type = viewAnimator.getDisplayedChild() == 0 ? ProgressType.DIALOG : ProgressType.TITLE_BAR;
 		
 		// should validate here
-		new FetchMemberInfoTask(MemberDetailsActivity.this, type).execute(username, password);
+		new FetchMemberInfoTask(MemberDetailsActivity.this, type, source).execute(username, password);
 	}
 	
 	public void showLoginView() {
@@ -223,7 +233,13 @@ public class MemberDetailsActivity extends Activity {
         switch (item.getItemId()) {
         case R.id.refresh:
         	// always update if the item was selected
-            performLogin();
+        	UsernamePassword usernamePassword = Util.read(this);
+        	
+        	if (Util.usernameValid(usernamePassword.getUsername()) &&
+        			Util.passwordValid(usernamePassword.getPassword())) {
+        		performLogin(usernamePassword.getUsername(), usernamePassword.getPassword(), UpdateSource.REFRESH_BUTTON);
+        	}
+            
             return true;
         case R.id.settings:
         	Intent intent = new Intent(this, SettingsActivity.class);

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dajodi.scandic.FetchMemberInfoTask.ProgressType;
+import com.dajodi.scandic.Tracker.UpdateSource;
 import com.dajodi.scandic.user.UsernamePassword;
 
 public class SettingsActivity extends Activity {
@@ -92,7 +93,7 @@ public class SettingsActivity extends Activity {
     
     private void performLogin(String username, String password) {
 		// should validate here
-		new FetchMemberInfoTask(this, ProgressType.DIALOG).execute(username, password);
+		new FetchMemberInfoTask(this, ProgressType.DIALOG, UpdateSource.CHANGEPW_BUTTON).execute(username, password);
 	}
     
     
