@@ -134,7 +134,7 @@ public class ScandicSessionHelper {
     	InputStream in = get(uri);
     	
     	// should we try to minimize the input stream?
-    	in = minimizeFormInput(in, FORM_START, FORM_END);
+//    	in = minimizeFormInput(in, FORM_START, FORM_END);
     	
     	try {
     		long before = System.currentTimeMillis();
@@ -241,7 +241,7 @@ public class ScandicSessionHelper {
         InputStream instream = Util.ungzip(response);
         
     	// should we try to minimize the input stream?
-        instream = minimizeFormInput(instream, ACCOUNT_DIV_START, ACCOUNT_DIV_END);
+//        instream = minimizeFormInput(instream, ACCOUNT_DIV_START, ACCOUNT_DIV_END);
 
         try {
 	        long before = System.currentTimeMillis();
