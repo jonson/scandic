@@ -19,7 +19,7 @@ public enum Singleton {
 	 * Indicates whether or not we are in production mode.
 	 * In production mode, no tracking is done.
 	 */
-	private final boolean production = true;
+	private final boolean production = false;
 	
 	private final DefaultHttpClient httpClient;
 	private final HtmlScraper scraper;

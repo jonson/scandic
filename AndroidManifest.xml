@@ -7,7 +7,7 @@
     <application android:label="@string/app_name"
     			android:theme="@style/ScandicTheme" 
     			android:icon="@drawable/ic_launcher"
-    			android:debuggable="false">
+    			android:debuggable="true">
         <activity android:name=".MemberDetailsActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTop">
