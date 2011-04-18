@@ -122,6 +122,7 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 			long before = System.currentTimeMillis();
 			MemberInfo info = ScandicSessionHelper.fetchInfo(params[0], params[1]);
 			long after = System.currentTimeMillis();
+			Log.d("login took " + (after - before) + "ms");
 			
 			if (info != null) {
 				// write the username, password only after a successful request

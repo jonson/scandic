@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.cookie.Cookie;
@@ -35,15 +37,9 @@ import com.dajodi.scandic.model.MemberInfo;
 public class ScandicSessionHelper {
 
 	
-
+	public static String SESSION_ID_COOKIE_NAME = "ASP.NET_SessionId";
     public static String LOGGED_IN_COOKIE_NAME = "IsLoggedInUser";
-    
-    // brutal, but might be needed?
-    public static Pattern FORM_START = Pattern.compile(".*<form.+name=[\"']aspnetForm[\"'].*");
-    public static Pattern FORM_END = Pattern.compile(".*</form>.*");
-    
-    public static Pattern ACCOUNT_DIV_START = Pattern.compile(".*<!--\\s*AccountOverview\\s*-->.*");
-    public static Pattern ACCOUNT_DIV_END = Pattern.compile(".*<!--\\s*/AccountOverview\\s*-->.*");
+
     
     /**
      * Determines if the logged in cookie exists.  If this is the case, there's no
@@ -62,39 +58,6 @@ public class ScandicSessionHelper {
             }
         }
     	return loggedIn;
-    }
-    
-    private static InputStream minimizeFormInput(InputStream formInputStream, Pattern startPattern, Pattern endPattern) throws IOException {
-    	
-    	long before = System.currentTimeMillis();
-    	
-    	StringBuilder sb = new StringBuilder();
-    	
-    	// read it per line
-    	BufferedReader br = new BufferedReader(new InputStreamReader(formInputStream));
-    	
-    	boolean startMarkerFound = false;
-    	
-    	String line;
-    	while ((line = br.readLine()) != null) {
-    		if (!startMarkerFound && startPattern.matcher(line).matches()) {
-    			startMarkerFound = true;
-    		} 
-    		
-    		if (startMarkerFound) {
-    			sb.append(line.trim());
-    			
-    			if (endPattern.matcher(line).matches()) {
-    				break;
-    			}
-    		}
-    	}
-    	
-    	formInputStream.close();
-    	
-    	InputStream in = new ByteArrayInputStream(sb.toString().getBytes());
-    	Log.d("Minimize buffer took: " + (System.currentTimeMillis() - before) + "ms");
-    	return in;
     }
     
     public static InputStream get(URI uri) {
@@ -130,52 +93,45 @@ public class ScandicSessionHelper {
         }
     }
 
-    private static Map<String, String> getFormInputFields(URI uri) throws IOException {
-    	InputStream in = get(uri);
-    	
-    	// should we try to minimize the input stream?
-//    	in = minimizeFormInput(in, FORM_START, FORM_END);
-    	
-    	try {
-    		long before = System.currentTimeMillis();
-    		Map<String,String> result = Singleton.INSTANCE.getScraper().scrapeFormInputFields(in);
-    		Log.d("Scrape member info took " + (System.currentTimeMillis() - before) + "ms");
-    		return result;
-    	} finally {
-    		in.close();
-    	}
-    }
+   
 
     private static void login(String username, String password) throws Exception {
 
     	DefaultHttpClient client = Singleton.INSTANCE.getHttpClient();
+    	client.getCookieStore().clear();
 
-    	Map<String,String> inputFields = getFormInputFields(new URI("http://www.scandichotels.com/settings/Side-foot/About-us-Container/About-Us/"));
-
-        inputFields.put("ctl00$MenuLoginStatus$txtLoyaltyUsername", username);
-        inputFields.put("ctl00$MenuLoginStatus$txtLoyaltyPassword", password);
-        inputFields.put("__EVENTTARGET", "ctl00$MenuLoginStatus$btnLogIn");
-        inputFields.put("ctl00$MenuLoginStatus$loginPopUpPageID", "LOGIN_POPUP_MODULE");
-
-        // to remove:
-        Set<String> toRemove = new HashSet<String>();
-        toRemove.add("ctl00$MenuLoginStatus$RememberUserIdPwd");
-        toRemove.add("ctl00$SecondaryBodyRegion$ctl00$BE$rememberMe");
-        toRemove.add("ctl00$MenuLoginStatus$RememberUserIdPwd");
-
-        List<NameValuePair> nvps = new LinkedList<NameValuePair>();
-        for (String key : inputFields.keySet()) {
-
-            if (!toRemove.contains(key)) {
-                String name = key;
-                String value = inputFields.get(key);
-
-                nvps.add(new BasicNameValuePair(name, value == null ? "" : value));
-
-                // useful, but onl locally
-//                Log.d("Entry: " + name + "=" + (value == null ? "" : value));
-            }
-        }
+    	HttpHead head = new HttpHead("https://www.scandichotels.com/Frequent-Guest-Programme/");
+    	
+    	// only for user-agent
+    	Util.gzipify(head);
+    	
+    	HttpResponse response = client.execute(head);
+    	
+    	if (response.getStatusLine().getStatusCode() != 200) {
+    		throw new ScandicHtmlException("HEAD request to FG page did not return a 200, instead " + response.getStatusLine().getStatusCode());
+    	}
+    	head.abort();
+    	
+    	boolean found = false;
+    	// assume this cookie exists
+    	for (Cookie cookie : client.getCookieStore().getCookies()) {
+    		if (SESSION_ID_COOKIE_NAME.equals(cookie.getName())) {
+    			found = true;
+    			break;
+    		}
+    	}
+    	if (!found) {
+    		throw new ScandicHtmlException("Session id cookie not valid from head request, dying");
+    	}
+    	
+    	
+    	List<NameValuePair> nvps = new LinkedList<NameValuePair>();
+    	nvps.add(new BasicNameValuePair("ctl00$MenuLoginStatus$txtLoyaltyUsername", username));
+    	nvps.add(new BasicNameValuePair("ctl00$MenuLoginStatus$txtLoyaltyPassword", password));
+    	nvps.add(new BasicNameValuePair("ctl00$MenuLoginStatus$loginPopUpID", "LOGIN_POPUP_MODULE"));
+    	nvps.add(new BasicNameValuePair("ctl00$MenuLoginStatus$loginPopUpPageID", "LOGIN_POPUP_MODULE"));
+    	nvps.add(new BasicNameValuePair("__PREVIOUSPAGE", ""));
+    	nvps.add(new BasicNameValuePair("__EVENTTARGET", "ctl00$MenuLoginStatus$btnLogIn"));
 
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nvps);
 
@@ -193,7 +149,7 @@ public class ScandicSessionHelper {
         Util.gzipify(post);
         
         post.setEntity(entity);
-        HttpResponse response = client.execute(post);
+        response = client.execute(post);
         post.abort();
 
         if (isLoggedIn()) {

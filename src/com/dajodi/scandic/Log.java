@@ -2,7 +2,7 @@ package com.dajodi.scandic;
 
 public class Log {
 
-	private static final boolean ENABLED = true;
+	private static final boolean ENABLED = false;
 	private static final String TAG = "Scandic";
 	
 	public static void d(String msg) {

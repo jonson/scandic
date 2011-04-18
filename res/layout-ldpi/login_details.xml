@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/loginLayout" android:padding="10dp">
+<ImageView android:id="@+id/imageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:scaleType="fitStart" android:src="@drawable/logo_resize" android:layout_marginBottom="2dp"></ImageView>
+<!-- <TextView android:layout_height="wrap_content" android:id="@+id/textView1" android:text="@string/login.freqguest" android:layout_width="wrap_content" style="@style/TextSmallGrey"></TextView> -->
+<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:orientation="vertical" android:padding="10dp" android:background="@drawable/userpass_background" android:layout_marginTop="10dp">
+    <TextView android:layout_height="wrap_content" android:id="@+id/lblUsername" android:text="@string/login.username" android:layout_width="wrap_content" style="@style/TextSmallGreyBold"></TextView>
+    <EditText android:layout_height="wrap_content" android:id="@+id/txtUsername" android:layout_width="fill_parent" android:inputType="text"></EditText>
+    <TextView android:layout_height="wrap_content" android:id="@+id/lblPassword" android:text="@string/login.password" android:layout_width="wrap_content" style="@style/TextSmallGreyBold"></TextView>
+    <EditText android:layout_height="wrap_content" android:id="@+id/txtPassword" android:layout_width="fill_parent" android:inputType="textPassword"></EditText>
+    <Button android:layout_gravity="right" android:layout_height="wrap_content" android:paddingLeft="50dp" android:layout_width="wrap_content" android:paddingRight="50dp" android:id="@+id/button1" android:text="@string/login.login"></Button>
+</LinearLayout>
+</LinearLayout>
