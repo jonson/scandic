@@ -18,10 +18,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
@@ -91,7 +95,60 @@ public class MemberDetailsActivity extends Activity {
     	
     	tracker = Singleton.INSTANCE.getTracker();
     	tracker.startTracking(this);
+    	
+    	// add the refresh listener
+    	addProgressIndicator();
+    	
     }
+    
+    /**
+     * Sets the indeterminate loading state of a refresh button added with
+     * {@link ActivityHelper#addActionButtonCompatFromMenuItem(android.view.MenuItem)}
+     * (where the item ID was menu_refresh).
+     */
+    public void setRefreshActionButtonCompatState(boolean refreshing) {
+        View refreshButton = findViewById(R.id.actionBarRefreshButton);
+        View refreshIndicator = findViewById(R.id.menu_refresh_progress);
+
+        if (refreshButton != null) {
+        	// invisible b/c we're using the width for layout
+            refreshButton.setVisibility(refreshing ? View.INVISIBLE : View.VISIBLE);
+        }
+        if (refreshIndicator != null) {
+            refreshIndicator.setVisibility(refreshing ? View.VISIBLE : View.GONE);
+        }
+    }
+    
+    private void addProgressIndicator() {
+    	// Refresh buttons should be stateful, and allow for indeterminate progress indicators,
+        // so add those.
+//        int buttonWidth = getResources()
+//                .getDimensionPixelSize(R.dimen.actionbar_compat_height);
+//        int buttonWidthDiv3 = buttonWidth / 3;
+//        ProgressBar indicator = new ProgressBar(this, null,
+//                R.attr.actionbarCompatProgressIndicatorStyle);
+//        RelativeLayout.LayoutParams indicatorLayoutParams = new RelativeLayout.LayoutParams(
+//                buttonWidthDiv3, buttonWidthDiv3);
+//        indicatorLayoutParams.setMargins(buttonWidthDiv3, buttonWidthDiv3,
+//                buttonWidth - 2 * buttonWidthDiv3, 0);
+//        indicator.setLayoutParams(indicatorLayoutParams);
+////        indicator.setVisibility(View.GONE);
+//        indicator.setId(R.id.menu_refresh_progress);
+        
+//        ((ViewGroup)findViewById(R.id.actionBar)).addView(indicator);
+        
+        ImageButton refreshButton = (ImageButton) findViewById(R.id.actionBarRefreshButton);
+//        refreshButton.setClickable(true);
+        refreshButton.setOnClickListener(ocl);
+    }
+    
+    private OnClickListener ocl = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			attemptLogin();
+		}
+	};
     
     @Override
     protected void onDestroy() {
@@ -161,32 +218,35 @@ public class MemberDetailsActivity extends Activity {
 		View v = getLayoutInflater().inflate(R.layout.login_details, null);
 		
 		// add a progress dialog to the login button
-        Button button = (Button) v.findViewById(R.id.button1);
+        Button button = (Button) v.findViewById(R.id.loginButton);
         
         button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
-				EditText usernameTxt = (EditText)loginView.findViewById(R.id.txtUsername);
-				EditText passwordTxt = (EditText)loginView.findViewById(R.id.txtPassword);
-				
-				String username = usernameTxt.getText().toString();
-				String password = passwordTxt.getText().toString();
-				
-				// some validation here (membership a number, pw length, ...)
-				if (!Util.usernameValid(username)) {
-					Toast.makeText(MemberDetailsActivity.this, R.string.login_invalid_user, Toast.LENGTH_SHORT).show();
-					usernameTxt.requestFocus();
-				} else if (!Util.passwordValid(password)) {
-					Toast.makeText(MemberDetailsActivity.this, R.string.login_invalid_password, Toast.LENGTH_SHORT).show();
-					passwordTxt.requestFocus();
-				} else {
-					performLogin(username, password, UpdateSource.LOGIN_BUTTON);
-				}
+				doLogin();
 			}
 		});
         
         return v;
+	}
+	
+	private void doLogin() {
+		EditText usernameTxt = (EditText)loginView.findViewById(R.id.txtUsername);
+		EditText passwordTxt = (EditText)loginView.findViewById(R.id.txtPassword);
+		
+		String username = usernameTxt.getText().toString();
+		String password = passwordTxt.getText().toString();
+		
+		// some validation here (membership a number, pw length, ...)
+		if (!Util.usernameValid(username)) {
+			Toast.makeText(MemberDetailsActivity.this, R.string.login_invalid_user, Toast.LENGTH_SHORT).show();
+			usernameTxt.requestFocus();
+		} else if (!Util.passwordValid(password)) {
+			Toast.makeText(MemberDetailsActivity.this, R.string.login_invalid_password, Toast.LENGTH_SHORT).show();
+			passwordTxt.requestFocus();
+		} else {
+			performLogin(username, password, UpdateSource.LOGIN_BUTTON);
+		}
 	}
 		
 	private void performLogin(String username, String password, UpdateSource source) {
@@ -197,11 +257,26 @@ public class MemberDetailsActivity extends Activity {
 	}
 	
 	public void showLoginView() {
+		
+		// hide the refresh stuff
+		setRefreshStuffVisible(false);
+		
 		viewAnimator.setDisplayedChild(0);
 	}
 	
 	public void showDetailsView() {
+		
+		// show the refresh stuff
+		setRefreshStuffVisible(true);
+		
 		viewAnimator.setDisplayedChild(1);
+	}
+	
+	public void setRefreshStuffVisible(boolean visible) {
+		
+		findViewById(R.id.actionBarSep1).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+		findViewById(R.id.actionBarRefreshButton).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+		
 	}
 	
 	private View createDetailsView() {
@@ -231,16 +306,9 @@ public class MemberDetailsActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-        case R.id.refresh:
-        	// always update if the item was selected
-        	UsernamePassword usernamePassword = Util.read(this);
-        	
-        	if (Util.usernameValid(usernamePassword.getUsername()) &&
-        			Util.passwordValid(usernamePassword.getPassword())) {
-        		performLogin(usernamePassword.getUsername(), usernamePassword.getPassword(), UpdateSource.REFRESH_BUTTON);
-        	}
-            
-            return true;
+//        case R.id.refresh:
+//        	attemptLogin();
+//            return true;
         case R.id.settings:
         	Intent intent = new Intent(this, SettingsActivity.class);
         	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -249,6 +317,16 @@ public class MemberDetailsActivity extends Activity {
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+    
+    public void attemptLogin() {
+    	// always update if the item was selected
+    	UsernamePassword usernamePassword = Util.read(this);
+    	
+    	if (Util.usernameValid(usernamePassword.getUsername()) &&
+    			Util.passwordValid(usernamePassword.getPassword())) {
+    		performLogin(usernamePassword.getUsername(), usernamePassword.getPassword(), UpdateSource.REFRESH_BUTTON);
+    	}
     }
 	
 	

@@ -8,6 +8,7 @@ public class PersistedData {
 	private MemberInfo memberInfo;
 	/** END VERSION 1 **/
 	
+	
 	public int getVersion() {
 		return version;
 	}

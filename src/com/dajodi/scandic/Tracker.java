@@ -7,6 +7,8 @@ import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 public final class Tracker {
 	
+	private static final String DEV_TRACKING_CODE = "UA-22046368-5";
+	private static final String PROD_TRACKING_CODE = "UA-22046368-2";
 	
 	private static final String CATEGORY_UPDATE = "Update";
 	private static final String ACTION_SOURCE = "Source";
@@ -23,12 +25,7 @@ public final class Tracker {
 	
 	public Tracker(boolean production) {
 		this.production = production;
-		
-		if (production) {
-			tracker = GoogleAnalyticsTracker.getInstance();
-		} else {
-			tracker = null;
-		}
+		tracker = GoogleAnalyticsTracker.getInstance();
 	}
 	
 	/**
@@ -39,14 +36,14 @@ public final class Tracker {
 	public void startTracking(Context context) {
 		// analytics tracking
 		if (production) {
-			this.tracker.start("UA-22046368-2", 30, context);
+			this.tracker.start(PROD_TRACKING_CODE, context);
+		} else {
+			this.tracker.start(DEV_TRACKING_CODE, context);
 		}
 	}
 	
 	public void stopTracking() {
-		if (production) {
-			this.tracker.stop();
-		}
+		this.tracker.stop();
 	}
 	
 	public void trackLoginError() {
@@ -57,28 +54,25 @@ public final class Tracker {
 		trackEvent(CATEGORY_ERROR, ACTION_UNKNOWN, "a", 0);
 	}
 	
-	public void trackUpdateDuration(int milliseconds) {
-		trackEvent(CATEGORY_UPDATE, ACTION_DURATION, "a", milliseconds);
-	}
-	
-	public void trackUpdateSource(UpdateSource source) {
-		trackEvent(CATEGORY_UPDATE, ACTION_SOURCE, source.toString(), 0);
-	}
+//	public void trackUpdateDuration(int milliseconds) {
+//		trackEvent(CATEGORY_UPDATE, ACTION_DURATION, "a", milliseconds);
+//	}
+//	
+//	public void trackUpdateSource(UpdateSource source) {
+//		trackEvent(CATEGORY_UPDATE, ACTION_SOURCE, source.toString(), 0);
+//	}
 	
 	public void trackMainActivityView() {
 		trackPageView(MAIN_ACTIVITY);
 	}
 	
 	private void trackEvent(String category, String action, String label, int value) {
-		if (production) {
-			this.tracker.trackEvent(category, action, label, value);
-		}
+		this.tracker.trackEvent(category, action, label, value);
 	}
 	
 	private void trackPageView(String page) {
-		if (production) {
-			this.tracker.trackPageView(page);
-		}
+		this.tracker.trackPageView(page);
+		this.tracker.dispatch();
 	}
 
 }

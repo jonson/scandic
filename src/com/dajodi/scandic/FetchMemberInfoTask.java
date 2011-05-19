@@ -49,7 +49,12 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 			dialog = ProgressDialog.show(context, "", context.getString(R.string.login_loading), true, true);
 			dialog.show();
 		} else if (progressType == ProgressType.TITLE_BAR) {
-			context.setProgressBarIndeterminateVisibility(true);
+			
+			if (memberDetailsActivity != null) {
+				memberDetailsActivity.setRefreshActionButtonCompatState(true);
+			} else {
+				context.setProgressBarIndeterminateVisibility(true);
+			}
 		}
 	}
 	
@@ -60,7 +65,12 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 		if (progressType == ProgressType.DIALOG && dialog != null) {
 			dialog.cancel();
 		} else if (progressType == ProgressType.TITLE_BAR) {
-			context.setProgressBarIndeterminateVisibility(false);
+			
+			if (memberDetailsActivity != null) {
+				memberDetailsActivity.setRefreshActionButtonCompatState(false);
+			} else {
+				context.setProgressBarIndeterminateVisibility(false);
+			}
 		}
 		
 		if (result != null) {
@@ -109,7 +119,6 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 	protected MemberInfo doInBackground(String... params) {
 		
 		Tracker tracker = Singleton.INSTANCE.getTracker();
-		tracker.trackUpdateSource(source);
 		
 		try {
 			
@@ -132,7 +141,6 @@ public class FetchMemberInfoTask extends AsyncTask<String, Void, MemberInfo> {
 				Util.writeMemberInfo(context, info);
 				Log.d("successfully wrote fileinfo to disk");
 				
-				tracker.trackUpdateDuration((int)(after - before));
 			}
 			
 			return info;

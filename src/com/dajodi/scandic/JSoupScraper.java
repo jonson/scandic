@@ -24,7 +24,7 @@ public class JSoupScraper implements HtmlScraper {
 	public Map<String, String> scrapeFormInputFields(InputStream inStream) {
 		
 		try {
-			Document doc = Jsoup.parse(inStream, HTTP.ISO_8859_1, "");
+			Document doc = Jsoup.parse(inStream, HTTP.UTF_8, "");
 			
 			Element form = doc.body().getElementById("aspnetForm");
 			
@@ -56,7 +56,7 @@ public class JSoupScraper implements HtmlScraper {
 		
 		Document doc;
 		try {
-			doc = Jsoup.parse(inStream, HTTP.ISO_8859_1, "");
+			doc = Jsoup.parse(inStream, HTTP.UTF_8, "");
 			
 			Element accountOverview = doc.getElementById("AccountOverview");
 						

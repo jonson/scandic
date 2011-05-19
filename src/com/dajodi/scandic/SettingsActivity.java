@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.dajodi.scandic.FetchMemberInfoTask.ProgressType;
@@ -25,7 +26,7 @@ public class SettingsActivity extends Activity {
         
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         
-        setContentView(R.layout.login_details);
+        setContentView(R.layout.settings_main);
 
         before = Util.read(this);
         
@@ -47,10 +48,15 @@ public class SettingsActivity extends Activity {
     private void createLoginView() {
 				
 		// add a progress dialog to the login button
-        Button button = (Button) findViewById(R.id.button1);
+        Button button = (Button) findViewById(R.id.loginButton);
         
         // change the text to save
         button.setText(R.string.login_save);
+        
+        // hide the refresh button
+        ImageButton refreshButton = (ImageButton) findViewById(R.id.actionBarRefreshButton);
+        refreshButton.setVisibility(View.GONE);
+        findViewById(R.id.actionBarSep1).setVisibility(View.GONE);
         
         button.setOnClickListener(new OnClickListener() {
 			@Override

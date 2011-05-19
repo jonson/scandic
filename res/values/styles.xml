@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <style name="ScandicTheme" parent="@android:style/Theme.Light">
+  <style name="ScandicTheme" parent="@android:style/Theme.Light.NoTitleBar">
     <item name="android:listSeparatorTextViewStyle">@style/listSeparatorTextViewStyle</item>
     
-    <!-- can override default styles here, do it! -->
+    <!-- for programmatic instantiation -->
+    <item name="actionbarCompatButtonStyle">@style/ActionBarCompatButton</item>
+    <item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
   </style>
   
   <style name="listSeparatorTextViewStyle" parent="@android:attr/listSeparatorTextViewStyle">
@@ -62,6 +64,17 @@
   
   <style name="TextMediumGreyBold" parent="@android:style/TextAppearance.Medium">
   		<item name="android:textStyle">bold</item>
+  </style>
+  
+  <style name="ActionBarCompatButton">
+        <item name="android:layout_width">@dimen/actionbar_compat_height</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:background">@drawable/actionbar_compat_button</item>
+  </style>
+  
+  <style name="ActionBarCompatProgressIndicator" parent="android:style/Widget.ProgressBar.Small">
+        <item name="android:indeterminate">true</item>
   </style>
   
    
