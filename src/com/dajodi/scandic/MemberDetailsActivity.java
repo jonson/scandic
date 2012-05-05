@@ -1,3 +1,18 @@
+/*
+ * Copyright 2012 - Jon DeYoung
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.dajodi.scandic;
 
 import java.text.DateFormat;
@@ -70,7 +85,6 @@ public class MemberDetailsActivity extends Activity {
 	private boolean initialOnCreateCall = true;
 	
 	private Intent lastIntent = null;
-	private Tracker tracker;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -92,9 +106,6 @@ public class MemberDetailsActivity extends Activity {
     	
     	initialOnCreateCall = false;
     	lastIntent = getIntent();
-    	
-    	tracker = Singleton.INSTANCE.getTracker();
-    	tracker.startTracking(this);
     	
     	// add the refresh listener
     	addProgressIndicator();
@@ -153,14 +164,11 @@ public class MemberDetailsActivity extends Activity {
     @Override
     protected void onDestroy() {
     	super.onDestroy();
-    	tracker.stopTracking();
     }
     
     @Override
     protected void onResume() {
     	super.onResume();
-    	
-    	tracker.trackMainActivityView();
     	
     	// if from settings intent
     	boolean fromSettings = lastIntent.getBooleanExtra(FetchMemberInfoTask.FROM_SETTINGS, false);
