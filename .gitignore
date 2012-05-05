@@ -1,3 +1,5 @@
 proguard
 bin
 gen
+.classpath
+.project
